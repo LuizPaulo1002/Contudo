@@ -1,4 +1,4 @@
-// frontend/script.js
+// frontend/script.js - Versão Corrigida
 const API_URL = 'http://localhost:3000/transactions';
 
 // Elementos do DOM
@@ -15,10 +15,14 @@ const typeRadio = document.querySelectorAll('input[name="type"]');
 async function fetchTransactions() {
     try {
         const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status}`);
+        }
         const transactions = await response.json();
         updateDOM(transactions);
     } catch (error) {
         console.error('Erro ao buscar transações:', error);
+        alert('Erro ao carregar transações. Verifique se o servidor está rodando.');
     }
 }
 
@@ -35,40 +39,56 @@ function updateDOM(transactions) {
         item.classList.add(transaction.type);
 
         const amount = parseFloat(transaction.amount);
-        const sign = amount < 0 ? '-' : '+';
-        const formattedAmount = `R$ ${Math.abs(amount).toFixed(2)}`;
+        
+        // Formatação correta dos valores
+        const isNegative = amount < 0;
+        const formattedAmount = `R$ ${Math.abs(amount).toFixed(2).replace('.', ',')}`;
+        const sign = isNegative ? '-' : '+';
 
         item.innerHTML = `
-            ${transaction.description} <span>${sign} ${formattedAmount}</span>
+            <span class="transaction-description">${transaction.description}</span>
+            <span class="transaction-amount ${transaction.type}">${sign} ${formattedAmount}</span>
+            <button onclick="deleteTransaction(${transaction.id})" class="delete-btn">×</button>
         `;
         transactionList.appendChild(item);
 
-        // Calcula totais
+        // Calcula totais corretamente
         if (transaction.type === 'receita') {
-            totalReceitas += amount;
+            totalReceitas += Math.abs(amount); // Sempre positivo para receitas
         } else {
-            totalDespesas += amount;
+            totalDespesas += Math.abs(amount); // Sempre positivo para mostrar o total de despesas
         }
     });
 
-    const saldoTotal = totalReceitas + totalDespesas;
+    const saldoTotal = totalReceitas - totalDespesas;
 
-    // Atualiza os cards de resumo
-    totalReceitasEl.textContent = `R$ ${totalReceitas.toFixed(2)}`;
-    totalDespesasEl.textContent = `R$ ${Math.abs(totalDespesas).toFixed(2)}`;
-    saldoTotalEl.textContent = `R$ ${saldoTotal.toFixed(2)}`;
+    // Atualiza os cards de resumo com formatação brasileira
+    totalReceitasEl.textContent = `R$ ${totalReceitas.toFixed(2).replace('.', ',')}`;
+    totalDespesasEl.textContent = `R$ ${totalDespesas.toFixed(2).replace('.', ',')}`;
+    saldoTotalEl.textContent = `R$ ${saldoTotal.toFixed(2).replace('.', ',')}`;
+    
+    // Adiciona classe para saldo negativo
+    saldoTotalEl.className = saldoTotal < 0 ? 'negative' : 'positive';
 }
 
 // Função para adicionar uma nova transação
 async function addTransaction(event) {
     event.preventDefault();
 
-    const description = descriptionInput.value;
+    const description = descriptionInput.value.trim();
     const amount = parseFloat(amountInput.value);
     const type = document.querySelector('input[name="type"]:checked').value;
 
-    if (description.trim() === '' || isNaN(amount)) {
-        alert('Por favor, preencha a descrição e o valor corretamente.');
+    // Validações
+    if (!description) {
+        alert('Por favor, preencha a descrição.');
+        descriptionInput.focus();
+        return;
+    }
+
+    if (isNaN(amount) || amount <= 0) {
+        alert('Por favor, insira um valor válido maior que zero.');
+        amountInput.focus();
         return;
     }
 
@@ -79,7 +99,7 @@ async function addTransaction(event) {
     };
 
     try {
-        await fetch(API_URL, {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -87,18 +107,66 @@ async function addTransaction(event) {
             body: JSON.stringify(newTransaction),
         });
 
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status}`);
+        }
+
         // Limpa o formulário e atualiza a lista
-        descriptionInput.value = '';
-        amountInput.value = '';
-        fetchTransactions();
+        form.reset();
+        await fetchTransactions();
+        
+        // Feedback visual
+        showSuccessMessage('Transação adicionada com sucesso!');
+        
     } catch (error) {
         console.error('Erro ao adicionar transação:', error);
+        alert('Erro ao adicionar transação. Tente novamente.');
     }
 }
 
+// Função para deletar transação
+async function deleteTransaction(id) {
+    if (!confirm('Tem certeza que deseja deletar esta transação?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status}`);
+        }
+
+        await fetchTransactions();
+        showSuccessMessage('Transação removida com sucesso!');
+        
+    } catch (error) {
+        console.error('Erro ao deletar transação:', error);
+        alert('Erro ao remover transação. Tente novamente.');
+    }
+}
+
+// Função para mostrar mensagem de sucesso
+function showSuccessMessage(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.textContent = message;
+    document.body.appendChild(successDiv);
+    
+    setTimeout(() => {
+        successDiv.remove();
+    }, 3000);
+}
 
 // Event Listeners
 form.addEventListener('submit', addTransaction);
 
 // Inicialização
-document.addEventListener('DOMContentLoaded', fetchTransactions);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchTransactions();
+    
+    // Foco no primeiro campo ao carregar
+    descriptionInput.focus();
+});
