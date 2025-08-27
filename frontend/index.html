@@ -5,59 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contudo - Controle Financeiro</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="themes.css">
 </head>
 <body>
+    <!-- Modal de Configurações -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Configurações</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <h3>🎨 Aparência</h3>
+                    <div class="setting-item">
+                        <label for="theme-select">Tema:</label>
+                        <select id="theme-select">
+                            <option value="light">🌞 Claro</option>
+                            <option value="dark">🌙 Escuro</option>
+                            <option value="blue">🔵 Azul</option>
+                            <option value="green">🟢 Verde</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="currency-select">Moeda:</label>
+                        <select id="currency-select">
+                            <option value="BRL">🇧🇷 Real (R$)</option>
+                            <option value="USD">🇺🇸 Dólar ($)</option>
+                            <option value="EUR">🇪🇺 Euro (€)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>🔧 Funcionalidades</h3>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="auto-backup">
+                            Backup Automático
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="sound-effects">
+                            Efeitos Sonoros
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>ℹ️ Sobre</h3>
+                    <div class="about-info">
+                        <div class="logo-container">
+                            <div class="app-logo">
+                                <svg viewBox="0 0 100 100" width="50" height="50">
+                                    <!-- Logo do Contudo -->
+                                    <rect x="15" y="25" width="70" height="60" rx="8" fill="#27ae60"/>
+                                    <rect x="25" y="35" width="8" height="15" rx="2" fill="white"/>
+                                    <rect x="38" y="30" width="8" height="20" rx="2" fill="white"/>
+                                    <rect x="51" y="25" width="8" height="25" rx="2" fill="white"/>
+                                    <rect x="64" y="20" width="8" height="30" rx="2" fill="white"/>
+                                    <circle cx="75" cy="65" r="8" fill="white"/>
+                                    <circle cx="75" cy="65" r="3" fill="#27ae60"/>
+                                </svg>
+                            </div>
+                            <div class="app-info">
+                                <h4>Contudo v1.0.0</h4>
+                                <p>Desenvolvido por <strong>Luiz Paulo Peixoto</strong></p>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" onclick="openLink('https://linkedin.com/in/luiz-paulo-607279302')" class="social-link linkedin">
+                                <span>💼</span> LinkedIn
+                            </a>
+                            <a href="#" onclick="openLink('https://github.com/LuizPaulo1002')" class="social-link github">
+                                <span>💻</span> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="close-settings">Fechar</button>
+                <button type="button" class="btn-primary" id="save-settings">Salvar</button>
+            </div>
+        </div>
+    </div>
 
     <header>
-    <img src="logo.png" alt="Logo do Contudo" class="logo">
-    <h1>Contudo</h1>
-    <p>Gerencie seu dinheiro de forma simples, rápida e sem complicações!</p>
-</header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="app-logo">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                        <!-- Logo do Contudo baseada na imagem fornecida -->
+                        <defs>
+                            <linearGradient id="walletGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#27ae60;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Base da carteira -->
+                        <rect x="15" y="30" width="70" height="55" rx="12" fill="url(#walletGradient)"/>
+                        <!-- Gráficos/barras dentro da carteira -->
+                        <rect x="25" y="45" width="6" height="12" rx="3" fill="white" opacity="0.9"/>
+                        <rect x="35" y="40" width="6" height="17" rx="3" fill="white" opacity="0.9"/>
+                        <rect x="45" y="35" width="6" height="22" rx="3" fill="white" opacity="0.9"/>
+                        <rect x="55" y="32" width="6" height="25" rx="3" fill="white" opacity="0.9"/>
+                        <!-- Círculo/botão da carteira -->
+                        <circle cx="70" cy="65" r="6" fill="white"/>
+                        <circle cx="70" cy="65" r="2.5" fill="#27ae60"/>
+                        <!-- Detalhe superior da carteira -->
+                        <rect x="20" y="25" width="35" height="8" rx="4" fill="#27ae60"/>
+                        <rect x="22" y="27" width="31" height="4" rx="2" fill="white" opacity="0.3"/>
+                    </svg>
+                </div>
+                <div class="title-section">
+                    <h1>Contudo</h1>
+                    <p>Gerencie seu dinheiro de forma simples, rápida e sem complicações!</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="settings-btn" class="btn-icon" title="Configurações">⚙️</button>
+                <button id="help-btn" class="btn-icon" title="Ajuda">❓</button>
+            </div>
+        </div>
+    </header>
 
     <main class="container">
         <section id="summary">
             <div class="card">
+                <div class="card-icon">💰</div>
                 <h3>Receitas</h3>
                 <p id="total-receitas">R$ 0,00</p>
             </div>
             <div class="card">
+                <div class="card-icon">💸</div>
                 <h3>Despesas</h3>
                 <p id="total-despesas">R$ 0,00</p>
             </div>
             <div class="card balance">
+                <div class="card-icon">📊</div>
                 <h3>Saldo Total</h3>
                 <p id="saldo-total">R$ 0,00</p>
             </div>
         </section>
 
-        <section id="transaction-form-section">
-            <h2>Adicionar Transação</h2>
-            <form id="transaction-form">
-                <div class="form-control">
-                    <label for="description">Descrição</label>
-                    <input type="text" id="description" placeholder="Ex: Salário, Aluguel..." required>
+        <div class="main-content">
+            <section id="transaction-form-section">
+                <div class="section-header">
+                    <h2>💡 Adicionar Transação</h2>
+                    <div class="quick-actions">
+                        <button type="button" class="btn-quick receita" onclick="setQuickType('receita')">+ Receita</button>
+                        <button type="button" class="btn-quick despesa" onclick="setQuickType('despesa')">+ Despesa</button>
+                    </div>
                 </div>
-                <div class="form-control">
-                    <label for="amount">Valor</label>
-                    <input type="number" id="amount" placeholder="0.00" step="0.01" required>
-                </div>
-                <div class="form-control radio-group">
-                    <input type="radio" id="type-receita" name="type" value="receita" checked>
-                    <label for="type-receita">Receita</label>
-                    <input type="radio" id="type-despesa" name="type" value="despesa">
-                    <label for="type-despesa">Despesa</label>
-                </div>
-                <button type="submit">Adicionar</button>
-            </form>
-        </section>
+                <form id="transaction-form">
+                    <div class="form-row">
+                        <div class="form-control">
+                            <label for="description">📝 Descrição</label>
+                            <input type="text" id="description" placeholder="Ex: Salário, Aluguel, Supermercado..." required>
+                        </div>
+                        <div class="form-control">
+                            <label for="amount">💵 Valor</label>
+                            <input type="number" id="amount" placeholder="0,00" step="0.01" min="0.01" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-control radio-group">
+                            <label class="radio-label">
+                                <input type="radio" id="type-receita" name="type" value="receita" checked>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">💰 Receita</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" id="type-despesa" name="type" value="despesa">
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">💸 Despesa</span>
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <button type="submit">✅ Adicionar Transação</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
 
-        <section id="transaction-list-section">
-            <h2>Histórico de Transações</h2>
-            <ul id="transaction-list">
-                </ul>
-        </section>
+            <section id="transaction-list-section">
+                <div class="section-header">
+                    <h2>📜 Histórico de Transações</h2>
+                    <div class="list-actions">
+                        <input type="text" id="search-transactions" placeholder="🔍 Buscar transações..." class="search-input">
+                        <select id="filter-type" class="filter-select">
+                            <option value="all">Todos</option>
+                            <option value="receita">Receitas</option>
+                            <option value="despesa">Despesas</option>
+                        </select>
+                    </div>
+                </div>
+                <ul id="transaction-list"></ul>
+            </section>
+        </div>
     </main>
 
-    <script src="script.js"></script>
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="app-version">Contudo v1.0.0</span>
+                <span class="separator">•</span>
+                <span>Desenvolvido por <strong>Luiz Paulo Peixoto</strong></span>
+            </div>
+            <div class="footer-right">
+                <button onclick="openLink('https://linkedin.com/in/luiz-paulo-607279302')" class="footer-link">💼 LinkedIn</button>
+                <button onclick="openLink('https://github.com/LuizPaulo1002')" class="footer-link">💻 GitHub</button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="desktop-script.js"></script>
 </body>
 </html>
