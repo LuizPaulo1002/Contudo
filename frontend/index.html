@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contudo - Controle Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Contudo</h1>
+        <p>Gerencie seu dinheiro de forma simples, rápida e sem complicações!</p>
+    </header>
+
+    <main class="container">
+        <section id="summary">
+            <div class="card">
+                <h3>Receitas</h3>
+                <p id="total-receitas">R$ 0,00</p>
+            </div>
+            <div class="card">
+                <h3>Despesas</h3>
+                <p id="total-despesas">R$ 0,00</p>
+            </div>
+            <div class="card balance">
+                <h3>Saldo Total</h3>
+                <p id="saldo-total">R$ 0,00</p>
+            </div>
+        </section>
+
+        <section id="transaction-form-section">
+            <h2>Adicionar Transação</h2>
+            <form id="transaction-form">
+                <div class="form-control">
+                    <label for="description">Descrição</label>
+                    <input type="text" id="description" placeholder="Ex: Salário, Aluguel..." required>
+                </div>
+                <div class="form-control">
+                    <label for="amount">Valor</label>
+                    <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                </div>
+                <div class="form-control radio-group">
+                    <input type="radio" id="type-receita" name="type" value="receita" checked>
+                    <label for="type-receita">Receita</label>
+                    <input type="radio" id="type-despesa" name="type" value="despesa">
+                    <label for="type-despesa">Despesa</label>
+                </div>
+                <button type="submit">Adicionar</button>
+            </form>
+        </section>
+
+        <section id="transaction-list-section">
+            <h2>Histórico de Transações</h2>
+            <ul id="transaction-list">
+                </ul>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
