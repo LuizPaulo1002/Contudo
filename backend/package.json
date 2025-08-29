@@ -1,6 +1,6 @@
 {
   "name": "contudo",
-  "version": "1.0.0",
+  "version": "0.3",
   "description": "Contudo: gerencie seu dinheiro de forma simples, rápida e sem complicações de planilhas!",
   "main": "index.js",
   "scripts": {
