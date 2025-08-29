@@ -1,0 +1,391 @@
+/* Responsive Design */
+
+/* Large screens (desktops) */
+@media (min-width: 1200px) {
+    .main-content {
+        padding: 2rem 3rem;
+    }
+    
+    .header-content {
+        padding: 0 1rem;
+    }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+    .main-content {
+        padding: 1.5rem;
+    }
+    
+    .header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .monthly-summary {
+        font-size: 13px;
+    }
+    
+    .monthly-summary th,
+    .monthly-summary td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+/* Small screens (mobile landscape) */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .logo-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .user-greeting {
+        margin-left: 0;
+    }
+    
+    .nav-tabs {
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .add-section,
+    .expenses-section,
+    .monthly-total {
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+    
+    .expense-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .expense-actions {
+        align-self: flex-end;
+    }
+    
+    .total-section {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .monthly-total .total-amount {
+        font-size: 2rem;
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+    
+    .summary-table {
+        padding: 1rem;
+    }
+    
+    .monthly-summary {
+        font-size: 12px;
+    }
+    
+    .monthly-summary th,
+    .monthly-summary td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn-cancel,
+    .btn-save {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Notification adjustments */
+    .notification {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        max-width: none;
+    }
+}
+
+/* Extra small screens (mobile portrait) */
+@media (max-width: 480px) {
+    body {
+        font-size: 13px;
+    }
+    
+    .header {
+        padding: 0.75rem;
+    }
+    
+    .logo-text {
+        font-size: 1.25rem;
+    }
+    
+    .nav-tab {
+        padding: 0.375rem 0.75rem;
+        font-size: 13px;
+    }
+    
+    .user-menu {
+        padding: 0.375rem 0.75rem;
+        font-size: 13px;
+    }
+    
+    .main-content {
+        padding: 0.75rem;
+    }
+    
+    .add-section,
+    .expenses-section,
+    .monthly-total {
+        padding: 0.75rem;
+        border-radius: 8px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .btn-add,
+    .btn-copy-previous {
+        padding: 0.375rem 0.75rem;
+        font-size: 13px;
+    }
+    
+    .category-select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .expense-item {
+        padding: 0.75rem;
+    }
+    
+    .expense-info h4 {
+        font-size: 14px;
+    }
+    
+    .expense-info p {
+        font-size: 12px;
+    }
+    
+    .expense-amount {
+        font-size: 14px;
+    }
+    
+    .expense-actions button {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+    
+    .monthly-total {
+        padding: 1.5rem 0.75rem;
+    }
+    
+    .monthly-total h2 {
+        font-size: 1.25rem;
+    }
+    
+    .monthly-total .total-amount {
+        font-size: 1.75rem;
+    }
+    
+    .dashboard-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .chart-section {
+        padding: 1rem;
+    }
+    
+    .chart-section h3 {
+        font-size: 1.1rem;
+    }
+    
+    .chart-container {
+        height: 200px;
+    }
+    
+    .summary-table {
+        padding: 0.75rem;
+    }
+    
+    .monthly-summary {
+        font-size: 11px;
+    }
+    
+    .monthly-summary th,
+    .monthly-summary td {
+        padding: 0.375rem 0.125rem;
+    }
+    
+    /* Form adjustments */
+    .form-group input,
+    .form-group select {
+        padding: 0.625rem;
+        font-size: 13px;
+    }
+    
+    .radio-item {
+        padding: 0.625rem 0.75rem;
+        font-size: 13px;
+    }
+    
+    .btn-cancel,
+    .btn-save {
+        padding: 0.625rem 1rem;
+        font-size: 13px;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+    .header {
+        padding: 0.5rem 1rem;
+    }
+    
+    .main-content {
+        padding: 0.5rem 1rem;
+    }
+    
+    .modal-content {
+        max-height: 95vh;
+        margin: 0.5rem;
+    }
+    
+    .chart-container {
+        height: 200px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .header,
+    .user-menu,
+    .btn-add,
+    .btn-copy-previous,
+    .expense-actions,
+    .form-actions {
+        display: none;
+    }
+    
+    .main-content {
+        padding: 0;
+        max-width: none;
+    }
+    
+    .add-section,
+    .expenses-section,
+    .monthly-total,
+    .chart-section,
+    .summary-table {
+        box-shadow: none;
+        border: 1px solid var(--gray-300);
+        break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --gray-100: #F0F0F0;
+        --gray-200: #D0D0D0;
+        --gray-300: #B0B0B0;
+        --border: #808080;
+    }
+    
+    .expense-item,
+    .card,
+    .add-section,
+    .expenses-section,
+    .monthly-total {
+        border: 2px solid var(--gray-400);
+    }
+    
+    .btn-add,
+    .btn-save {
+        border: 2px solid var(--primary);
+    }
+    
+    .btn-cancel {
+        border: 2px solid var(--gray-500);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .modal-content {
+        animation: none;
+    }
+    
+    .notification {
+        animation: none;
+    }
+}

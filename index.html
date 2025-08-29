@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contudo - Controle Financeiro</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">C</div>
+                <h1 class="logo-text">Contudo</h1>
+                <span class="user-greeting">Olá, Henrique</span>
+            </div>
+            
+            <nav class="nav-tabs">
+                <a href="#" class="nav-tab active" data-view="controle">Controle</a>
+                <a href="#" class="nav-tab" data-view="dashboard">Dashboard</a>
+            </nav>
+            
+            <button class="user-menu">Sair</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Controle View -->
+        <div id="controle-view" class="view active">
+            <!-- Add Transaction Section -->
+            <section class="add-section">
+                <div class="section-header">
+                    <select class="category-select" id="expense-category">
+                        <option value="">Gasto Diverso</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="moradia">Moradia</option>
+                        <option value="saude">Saúde</option>
+                        <option value="educacao">Educação</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                    <button class="btn-add" id="add-transaction-btn">+ Adicionar</button>
+                </div>
+            </section>
+
+            <!-- Fixed Expenses -->
+            <section class="expenses-section">
+                <div class="section-header">
+                    <h2>Gastos Fixos</h2>
+                    <button class="btn-copy-previous">📊 Copiar fixos do mês anterior</button>
+                </div>
+
+                <div class="expenses-list" id="fixed-expenses">
+                    <!-- Fixed expenses will be populated here -->
+                </div>
+
+                <div class="total-section">
+                    <span class="total-label">Total:</span>
+                    <span class="total-value" id="fixed-total">R$ 0,00</span>
+                </div>
+            </section>
+
+            <!-- Variable Expenses -->
+            <section class="expenses-section">
+                <h2>Gastos Diversos</h2>
+                
+                <div class="expenses-list" id="variable-expenses">
+                    <!-- Variable expenses will be populated here -->
+                </div>
+
+                <div class="total-section">
+                    <span class="total-label">Total:</span>
+                    <span class="total-value" id="variable-total">R$ 0,00</span>
+                </div>
+            </section>
+
+            <!-- Monthly Total -->
+            <section class="monthly-total">
+                <h2>Total do mês</h2>
+                <div class="total-amount" id="monthly-total">R$ 0,00</div>
+            </section>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view">
+            <section class="dashboard-header">
+                <h2>Dashboard Comparativo</h2>
+                <div class="year-selector">
+                    <label>Ano:</label>
+                    <select id="year-select">
+                        <option value="2025" selected>2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section">
+                <h3>Comparativo de Gastos Mensais</h3>
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Monthly Summary Table -->
+            <section class="summary-table">
+                <table class="monthly-summary" id="monthly-summary-table">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Fixos</th>
+                            <th>Diversos</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal for Adding Transactions -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Adicionar Transação</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="transaction-form" class="modal-body">
+                <div class="form-group">
+                    <label for="transaction-description">Descrição</label>
+                    <input type="text" id="transaction-description" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transaction-amount">Valor (R$)</label>
+                        <input type="number" id="transaction-amount" step="0.01" min="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-date">Data</label>
+                        <input type="date" id="transaction-date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transaction-category">Categoria</label>
+                    <select id="transaction-category" required>
+                        <option value="">Selecione...</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="moradia">Moradia</option>
+                        <option value="saude">Saúde</option>
+                        <option value="educacao">Educação</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="transaction-type" value="fixo" checked>
+                            <span>Gasto Fixo</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="transaction-type" value="diverso">
+                            <span>Gasto Diverso</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
